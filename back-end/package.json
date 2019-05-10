@@ -1,0 +1,28 @@
+{
+  "name": "back-end",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "bootstrap": "^4.3.1",
+    "connect-mongodb-session": "^2.1.1",
+    "cors": "^2.8.5",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "express-session": "^1.16.1",
+    "install": "^0.12.2",
+    "method-override": "^3.0.0",
+    "mongodb": "^3.2.4",
+    "mongoose": "^5.5.7",
+    "morgan": "^1.9.1",
+    "npm": "^6.9.0",
+    "react": "^16.8.6",
+    "reactstrap": "^8.0.0"
+  }
+}
