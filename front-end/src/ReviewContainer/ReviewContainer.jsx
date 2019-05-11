@@ -21,7 +21,7 @@ export default class ReviewContainer extends Component{
         console.log(parsedReviews)
         if(parsedReviews.status === 200){
             this.setState({
-                reviews: parsedDrinks.data
+                reviews: parsedReviews.data
             })
         }
     }
@@ -47,11 +47,11 @@ export default class ReviewContainer extends Component{
     }
     render(){
         const reviewsList = this.state.reviews.map((review)=>{
-            return <ReviewDetail drink={drink}></ReviewDetail>
+            return <ReviewDetail review={review}></ReviewDetail>
         })
         return <div>
-            <h1>Welcome to the drinks app</h1>
-            <Link to="/reviews/new">Add a drink</Link>
+            <h1>Colorado Fourteeners App</h1>
+            <Link to="/reviews/new">Add a review</Link>
             <Link to="/reviews">Reviews index</Link>
             <Switch>
                 <Route exact path="/reviews" render={()=>{
