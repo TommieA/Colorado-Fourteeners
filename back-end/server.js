@@ -34,6 +34,6 @@ app.use((req, res, next)=>{
 const reviewController = require('./controllers/ReviewController');
 app.use('/reviews', reviewController);
 
-app.listen(process.env.PORT || 3000, ()=>{
-    console.log("ITS ALIIIIVE and wearing panties")
+app.listen(process.env.PORT || 9000, ()=>{
+    console.log("Listening")
 })

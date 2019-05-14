@@ -1,8 +1,12 @@
 import React from 'react';
 
 function ReviewDetail(props){
+  
     return(<div>
-        <p>Review {props.review.name}</p>
+        <br></br>
+        <p>{props.review.reviewName}  -  {props.review.mountainName} 
+        <p>{props.review.review}</p>
+           <button id="editDelete">Edit/Delete</button></p>
     </div>)
 }
 

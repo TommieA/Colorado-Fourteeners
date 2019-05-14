@@ -10,21 +10,29 @@ export default class ReviewContainer extends Component{
             reviews: []
         }
     }
+    
     componentDidMount(){
         this.getReviews();
     }
+
     getReviews = async ()=>{
-        const reviews = await fetch("http://localhost:9000/reviews", {
-            credentials: 'include'
-        })
-        const parsedReviews = await reviews.json();
-        console.log(parsedReviews)
-        if(parsedReviews.status === 200){
-            this.setState({
-                reviews: parsedReviews.data
+
+        try {
+            const reviews = await fetch("http://localhost:9000/reviews", {
+                credentials: 'include'
             })
-        }
+
+            const parsedReviews = await reviews.json();
+            console.log(parsedReviews.data)
+            if(parsedReviews.status === 200){
+                this.setState({reviews: parsedReviews.data})
+            }
+            }
+            catch (err){
+                console.log(err)
+            }
     }
+
     createReview = async (formData)=>{
         console.log(formData);
         const newReview = await fetch("http://localhost:9000/reviews", {
@@ -45,14 +53,16 @@ export default class ReviewContainer extends Component{
             })
         }
     }
+
     render(){
         const reviewsList = this.state.reviews.map((review)=>{
             return <ReviewDetail review={review}></ReviewDetail>
         })
         return <div>
-            <h1>Colorado Fourteeners App</h1>
-            <Link to="/reviews/new">Add a review</Link>
-            <Link to="/reviews">Reviews index</Link>
+            <h1>Colorado Fourteeners</h1>
+            <Link to="/reviews"><button>Show Reviews</button></Link>
+            <Link to="/reviews"><button>Add a new Review</button></Link>
+            {/* <button onClick={showFourteeners}>14ers Website</button> */}
             <Switch>
                 <Route exact path="/reviews" render={()=>{
                     return <div>{reviewsList}</div>
