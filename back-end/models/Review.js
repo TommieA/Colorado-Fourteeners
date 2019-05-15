@@ -6,13 +6,13 @@ const reviewSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    mountainName: {
+    peakName: {
         type: String,
         required: true
     },
     review: String
 })
 
-const User = mongoose.model("Review", reviewSchema);
+const Review = mongoose.model("Review", reviewSchema);
 
-module.exports = User;
+module.exports = Review;

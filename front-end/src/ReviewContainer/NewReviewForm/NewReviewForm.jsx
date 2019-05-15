@@ -18,7 +18,9 @@ class NewReviewForm extends Component{
     }
     render(){
         return <form onSubmit={this.handleSubmit}>
-            Name: <input onChange = {this.handleChange} type="text" name="name" />
+            Review Name: <input onChange = {this.handleChange} type="text" name="reviewName" />
+            Peak Name: <input onChange = {this.handleChange} type="text" name="peakName" />
+            Review: <input onChange = {this.handleChange} type="text" name="review" />
             <input type="submit"/>
         </form>
     }

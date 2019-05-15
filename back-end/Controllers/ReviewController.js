@@ -5,7 +5,7 @@ const Review = require("../models/Review");
 // List all Reviews
 router.get("/", async (req, res)=>{
     try{
-        const allReviews = await Review.find();
+        const allReviews = await Review.find({});
         res.json({
             data: allReviews,
             status: 200
@@ -19,6 +19,7 @@ router.get("/", async (req, res)=>{
 
 // Add Route
 router.post("/", async (req, res)=>{
+    console.log('Are qwe even here?')
     try { 
         const newReview = await Review.create(req.body);
         res.json({

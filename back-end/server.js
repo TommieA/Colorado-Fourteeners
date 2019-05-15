@@ -1,3 +1,4 @@
+require('./db/db');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -5,7 +6,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
-require('./db/db');
+
 const store = new MongoDBStore({
     uri: 'mongodb://localhost/Colorado-Fourteeners',
     collection: 'mySessions'
