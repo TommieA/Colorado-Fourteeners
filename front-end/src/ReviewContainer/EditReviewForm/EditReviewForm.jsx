@@ -1,29 +1,42 @@
 import React, { Component } from 'react';
 
-class EditReviewForm extends Component{
-    constructor(){
-        super();
+class EditReviewForm extends Component {
+    constructor(props){
+        super(props);
         this.state = {
-            reviewName: this.reviewName,
-            peakName: this.peakName,
-            review: this.review
+            reviewName: this.props.reviewName,
+            peakName:   this.props.review.peakName,
+            review:     this.props.review.review
         }
     }
 
-    handleChange = (e)=>{
-        this.setState({value: e.target.value})
+    componentDidMount() {
+        this.setState({
+            reviewName: this.props.review.reviewName
+        })
     }
 
-    handleSubmit = (e)=>{
+    
+    handleChange = (e) => {
+        console.log('ch ch ch changess');
+        console.log(e.target.value);
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+
+    handleSubmit = (e) => {
+        console.log(this.props.review._id);
         e.preventDefault();
-        this.props.updateReview(this.state);
+        this.props.editReview(this.state, this.props.review._id);
     }
 
-    render(){
+    render() {
+        console.log(this.props);
         return <form onSubmit={this.handleSubmit}>
-            review Name: <input onChange = {this.handleChange} type="text" name="reviewName" />
-            peak Name: <input onChange = {this.handleChange} type="text" name="peakName" />
-            Review: <input onChange = {this.handleChange} type="text" name="review" />
+            review Name: <input onChange = {this.handleChange} type="text" name="reviewName" value={this.state.reviewName}/>
+            peak Name: <input onChange = {this.handleChange} type="text" name="peakName" value={this.state.peakName}/>
+            Review: <input onChange = {this.handleChange} type="text" name="review" value={this.state.review}/>
             <input type="submit"/>
         </form>
     }

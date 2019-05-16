@@ -50,6 +50,7 @@ router.get('/:id', async (req, res, next) => {
 router.put('/:id', async (req, res) => {
     try {
         const updatedReview = await Review.findByIdAndUpdate(req.params.id, req.body, {new: true});
+        console.log(updatedReview);
         res.json({
             status: 200,
             data: updatedReview

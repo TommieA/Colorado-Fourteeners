@@ -1,14 +1,16 @@
 import React, {Component} from 'react';
 import ReviewDetail from './ReviewDetail/ReviewDetail';
-import {Switch, Route, Link} from 'react-router-dom';
+import {Switch, Route, Link, withRouter} from 'react-router-dom';
 import NewReviewForm from './NewReviewForm/NewReviewForm.jsx';
 import EditReviewForm from './EditReviewForm/EditReviewForm.jsx';
+import PeakDetailsForm from './PeakDetailsForm/PeakDetailsForm.jsx';
 
-export default class ReviewContainer extends Component{
+class ReviewContainer extends Component{
     constructor(){
         super();
         this.state = {
-            reviews: []
+            reviews: [],
+            reviewToEdit: {}
         }
     }
     
@@ -33,32 +35,35 @@ export default class ReviewContainer extends Component{
                 console.log(err)
             }
     }
-
-    editReview = async (id, e) => {
-        console.log('editReview', id);
-        e.preventDefault();
+    openEditReview = async (review) =>{
+        this.setState({
+            reviewToEdit: review
+        })
+        this.props.history.push('/reviews/edit');
+    }
+    editReview = async (data, id) => {
         try {
-            const editReview = await fetch('http://localhost:9000/reviews/edit' + id, {
+            const editReview = await fetch('http://localhost:9000/reviews/' + id, {
             method: 'PUT',
-            body: JSON.stringify(this.state.reviewToEdit),
+            body: JSON.stringify(data),
             headers: {
               'Content-Type': 'application/json'
             }
           })
-          
+         
         const parsedResponse = await editReview.json();
-        
-        this.setState({reviews:[...this.state.reviews, parsedResponse.data]})
-        
+        console.log(parsedResponse.data);
         const editedReviewArray = this.state.reviews.map((review) => {
-        
+       
         if(review._id === this.state.reviewToEdit._id){
             review = parsedResponse.data;
         }
         return review
         });
-
-        this.setState({reviews: editedReviewArray})
+       console.log(editedReviewArray);
+        this.setState({
+            reviews: editedReviewArray
+        })
 
         }
         catch(err){
@@ -93,19 +98,25 @@ export default class ReviewContainer extends Component{
         const parsedResponse = await newReview.json();
         if(parsedResponse.status === 200){
             this.setState({reviews: [...this.state.reviews, parsedResponse.data]})
-        }
-    }
+        };
+    };
 
     peakDetails = async (id, e) => {
         console.log("peakDetails");
         e.preventDefault();
-        <link to="colorado-14ers-api"></link>
-    }
+   
+        const searchURL = `https://cors-anywhere.herokuapp.com/https://colorado-14ers-api.herokuapp.com/api/v1/peaks/14`
+        const result = await fetch (searchURL);
+        const parsedResult = await result.json();
+        this.setState({
+            fourteenerArray: await parsedResult
+        });        
+    };
 
     render(){
         console.log(this.state);
         const reviewsList = this.state.reviews.map((review)=>{
-            return <ReviewDetail review={review} editReview={this.editReview} 
+            return <ReviewDetail review={review} openEditReview={this.openEditReview} 
                     deleteReview={this.deleteReview} peakDetails={this.peakDetails}></ReviewDetail>
         })
         return <div>
@@ -113,13 +124,21 @@ export default class ReviewContainer extends Component{
             <Link to="/reviews"><button>Show Reviews</button></Link>
             <Link to="/reviews/new"><button>Add a new Review</button></Link>
             <Switch>
-                <Route exact path="/reviews" render={()=>{
+                <Route exact path="/reviews" render={() => {
                     return <div>{reviewsList}</div>
                 }}/>
-                <Route exact path="/reviews/new" render={()=>{
+                <Route exact path="/reviews/new" render={() => {
                     return <NewReviewForm createReview={this.createReview}></NewReviewForm>
+                }}/>
+                <Route exact path="/reviews/edit" render={() => {
+                    return <EditReviewForm review={this.state.reviewToEdit} editReview={this.editReview}></EditReviewForm>
+                }}/>
+                <Route exact path="/reviews/peakDetails" render={() => {
+                    return <PeakDetailsForm peakDetails={this.peakDetails}></PeakDetailsForm>
                 }}/>
             </Switch>
         </div>
     }
 }
+
+export default withRouter(ReviewContainer)
