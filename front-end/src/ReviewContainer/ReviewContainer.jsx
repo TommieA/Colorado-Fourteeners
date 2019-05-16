@@ -3,7 +3,8 @@ import ReviewDetail from './ReviewDetail/ReviewDetail';
 import {Switch, Route, Link, withRouter} from 'react-router-dom';
 import NewReviewForm from './NewReviewForm/NewReviewForm.jsx';
 import EditReviewForm from './EditReviewForm/EditReviewForm.jsx';
-import PeakDetailsForm from './PeakDetailsForm/PeakDetailsForm.jsx';
+import WeatherForm from './WeatherForm/WeatherForm.jsx';
+
 
 class ReviewContainer extends Component{
     constructor(){
@@ -16,6 +17,7 @@ class ReviewContainer extends Component{
     
     componentDidMount(){
         this.getReviews();
+        this.weatherDenver();
     }
 
     getReviews = async () => {
@@ -101,26 +103,30 @@ class ReviewContainer extends Component{
         };
     };
 
-    peakDetails = async (id, e) => {
-        console.log("peakDetails");
-        e.preventDefault();
+    weatherDenver = async (e) => {
+        console.log("weatherDenver");
    
-        const searchURL = `https://cors-anywhere.herokuapp.com/https://colorado-14ers-api.herokuapp.com/api/v1/peaks/14`
+        const searchURL = `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/de065688f218744f9923500ef3357a38/39.7392358,-104.990251`
         const result = await fetch (searchURL);
-        const parsedResult = await result.json();
+        const parsedResult = await result.json();   
+         
         this.setState({
-            fourteenerArray: await parsedResult
-        });        
+            temperature: parsedResult.currently.temperature,
+            forecast: parsedResult.currently.summary
+        });          
     };
 
     render(){
         console.log(this.state);
         const reviewsList = this.state.reviews.map((review)=>{
             return <ReviewDetail review={review} openEditReview={this.openEditReview} 
-                    deleteReview={this.deleteReview} peakDetails={this.peakDetails}></ReviewDetail>
+                    deleteReview={this.deleteReview}></ReviewDetail>
         })
         return <div>
             <h1>Colorado Fourteeners</h1>
+            <h4>The current temperature in Denver is {this.state.temperature}</h4>
+            <h4>It is {this.state.forecast}</h4>
+            <br/>
             <Link to="/reviews"><button>Show Reviews</button></Link>
             <Link to="/reviews/new"><button>Add a new Review</button></Link>
             <Switch>
@@ -133,9 +139,9 @@ class ReviewContainer extends Component{
                 <Route exact path="/reviews/edit" render={() => {
                     return <EditReviewForm review={this.state.reviewToEdit} editReview={this.editReview}></EditReviewForm>
                 }}/>
-                <Route exact path="/reviews/peakDetails" render={() => {
-                    return <PeakDetailsForm peakDetails={this.peakDetails}></PeakDetailsForm>
-                }}/>
+                {/* <Route exact path="/reviews/peakWeather" render={() => {
+                    return <peakWeatherForm peakWeather={this.peakWeather}></peakWeatherForm>
+                }}/> */}
             </Switch>
         </div>
     }
