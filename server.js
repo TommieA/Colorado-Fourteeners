@@ -36,7 +36,7 @@ app.use((req, res, next)=>{
     next();
 })
 
-const reviewController = require('./controllers/ReviewController');
+const reviewController = require('./Controllers/ReviewController');
 app.use('/reviews', ReviewController);
 app.get('*', (req,res) =>{
     res.sendFile(path.join(__dirname+'/client/build/index.html'));
