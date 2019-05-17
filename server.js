@@ -10,11 +10,11 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const path = require('path')
 
 const store = new MongoDBStore({
-    uri: 'mongodb://localhost/Colorado-Fourteeners',
+    uri: process.env.MONGODB_URI,
     collection: 'mySessions'
   });
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: process.env.REACT_ADDRESS,
     credentials: true,
     optionsSuccessStatus: 200
 }))
@@ -27,6 +27,7 @@ app.use(session({
         maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
       },
 }))
+
 app.use(morgan('short'));
 app.use(bodyParser.json());
 app.use((req, res, next)=>{
