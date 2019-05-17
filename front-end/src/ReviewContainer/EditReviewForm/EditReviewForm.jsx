@@ -34,8 +34,9 @@ class EditReviewForm extends Component {
     render() {
         console.log(this.props);
         return <form onSubmit={this.handleSubmit}>
-            review Name: <input onChange = {this.handleChange} type="text" name="reviewName" value={this.state.reviewName}/>
-            peak Name: <input onChange = {this.handleChange} type="text" name="peakName" value={this.state.peakName}/>
+            <br/>
+            Review Name: <input onChange = {this.handleChange} type="text" name="reviewName" value={this.state.reviewName}/>
+            Peak Name: <input onChange = {this.handleChange} type="text" name="peakName" value={this.state.peakName}/>
             Review: <input onChange = {this.handleChange} type="text" name="review" value={this.state.review}/>
             <input type="submit"/>
         </form>

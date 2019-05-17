@@ -19,7 +19,6 @@ router.get("/", async (req, res)=>{
 
 // Add Route
 router.post("/", async (req, res)=>{
-    console.log('Are qwe even here?')
     try { 
         const newReview = await Review.create(req.body);
         res.json({
