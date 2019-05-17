@@ -18,6 +18,8 @@ app.use(cors({
     credentials: true,
     optionsSuccessStatus: 200
 }))
+// Serve the static files from the React app
+app.use(express.static(path.join(__dirname, 'client/build')));
 app.use(session({
     saveUninitialized: true,
     secret: "keepitsafe",
@@ -27,7 +29,6 @@ app.use(session({
         maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
       },
 }))
-
 app.use(morgan('short'));
 app.use(bodyParser.json());
 app.use((req, res, next)=>{
@@ -37,7 +38,9 @@ app.use((req, res, next)=>{
 
 const reviewController = require('./controllers/ReviewController');
 app.use('/reviews', reviewController);
-
+app.get('*', (req,res) =>{
+    res.sendFile(path.join(__dirname+'/client/build/index.html'));
+});
 app.listen(process.env.PORT || 9000, ()=>{
     console.log("Listening")
 })
