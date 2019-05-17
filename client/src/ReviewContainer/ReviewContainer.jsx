@@ -23,7 +23,7 @@ class ReviewContainer extends Component{
     getReviews = async () => {
 
         try {
-            const reviews = await fetch("http://localhost:9000/reviews", {
+            const reviews = await fetch(`${REACT_APP_BACKEND_ADDRESS}/reviews`, {
                 credentials: 'include'
             })
 
@@ -45,7 +45,7 @@ class ReviewContainer extends Component{
     }
     editReview = async (data, id) => {
         try {
-            const editReview = await fetch('http://localhost:9000/reviews/' + id, {
+            const editReview = await fetch(`${REACT_APP_BACKEND_ADDRESS}/reviews/` + id, {
             method: 'PUT',
             body: JSON.stringify(data),
             headers: {
@@ -76,7 +76,7 @@ class ReviewContainer extends Component{
     deleteReview = async (id, e) => {   
         e.preventDefault();
         try {
-            const deleteReview = await fetch('http://localhost:9000/reviews/' + id, {
+            const deleteReview = await fetch(`${REACT_APP_BACKEND_ADDRESS}/reviews/` + id, {
                 method: 'DELETE'
                 });
                 
@@ -89,7 +89,7 @@ class ReviewContainer extends Component{
         }
 
     createReview = async (formData) => {
-        const newReview = await fetch("http://localhost:9000/reviews", {
+        const newReview = await fetch(`${REACT_APP_BACKEND_ADDRESS}/reviews`, {
             credentials: 'include',
             method: "POST",
             body: JSON.stringify(formData),
