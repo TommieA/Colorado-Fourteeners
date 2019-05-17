@@ -1,3 +1,4 @@
+require('dotenv').config(),
 require('./db/db');
 const express = require('express');
 const app = express();
@@ -6,6 +7,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
+const path = require('path')
 
 const store = new MongoDBStore({
     uri: 'mongodb://localhost/Colorado-Fourteeners',

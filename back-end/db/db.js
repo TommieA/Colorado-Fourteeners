@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/Colorado-Fourteeners", {useNewUrlParser: true});
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/colorado-fourteeners", {useNewUrlParser: true});
 
 mongoose.connection.on('connected', ()=>{
     console.log("Mongoose is running with scissors")
